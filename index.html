@@ -9,11 +9,44 @@
 @media(max-width:800px){.nav{min-height:70px}.brand{min-width:0}.brand-name{font-size:13px}.menu-toggle{display:none}.navlinks{display:none;position:absolute;top:69px;left:0;right:0;background:#100c0c;border-bottom:1px solid var(--line);padding:8px 22px 17px;flex-direction:column;align-items:stretch;gap:0}.navlinks.open{display:flex}.navlinks a{padding:12px 0}.navlinks a:after{bottom:5px}.hero{min-height:600px;background-position:center center}.hero-content{padding:250px 0 48px}.territories{grid-template-columns:1fr;gap:14px}.territory{min-height:310px}.story{grid-template-columns:1fr}.story img{height:210px;min-height:0}.story-copy{padding:22px}.gallery{grid-template-columns:repeat(2,1fr)}.about-inner{grid-template-columns:1fr;gap:18px}.quote{font-size:20px}.section{padding:58px 0}}
 @media(max-width:520px){.wrap{width:min(var(--max),calc(100% - 28px))}.brand-mark{width:39px;height:39px}.brand-name{font-size:11px;letter-spacing:.1em}.brand-name small{font-size:8px}.hero{min-height:560px}.hero-content{padding:210px 0 42px}.hero h1{font-size:45px}.hero p{font-size:15px}.gallery{grid-template-columns:1fr}.media-card img{aspect-ratio:1.5}.footer-inner{align-items:flex-start;flex-direction:column}.section-head p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* Territoires cliquables — bandeau cinématique */
+.territory-shortcuts{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,28px);padding:30px max(22px,calc((100% - var(--max))/2)) 34px;background:#090707;overflow:hidden;border-bottom:1px solid var(--line)}
+.territory-shortcuts:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,6,6,.35),rgba(8,6,6,.94)),url('assets/hero.webp') center 65%/cover no-repeat;filter:saturate(.7)}
+.territory-shortcut{position:relative;isolation:isolate;min-height:122px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;overflow:hidden;border:1px solid rgba(225,202,171,.55);background:linear-gradient(0deg,rgba(6,5,5,.84),rgba(8,6,6,.38)),url('assets/hero.webp') center/cover no-repeat;color:#f0dfc9;transition:transform .25s,border-color .25s,filter .25s;box-shadow:0 8px 22px #0007}
+.territory-shortcut:nth-child(1){background-position:20% center}
+.territory-shortcut:nth-child(2){background-position:50% center}
+.territory-shortcut:nth-child(3){background-position:86% center}
+.territory-shortcut:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.8))}
+.territory-shortcut:hover,.territory-shortcut:focus-visible{transform:translateY(-3px);border-color:#b52a32;filter:brightness(1.15);outline:none}
+.territory-shortcut .shortcut-symbol{width:36px;height:36px;display:grid;place-items:center;color:#f4e2c8;margin-bottom:1px}
+.territory-shortcut .shortcut-symbol svg{width:34px;height:34px;display:block;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.territory-shortcut:nth-child(2){border-color:#a8292c}
+.territory-shortcut:nth-child(2) .shortcut-symbol{color:#c22c35}
+.territory-shortcut strong{font-size:clamp(17px,2vw,23px);font-weight:normal;letter-spacing:.13em;text-transform:uppercase;line-height:1.2}
+.territory-shortcut small{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#d8bda0}
+.shortcut-divider{grid-column:1/-1;text-align:center;color:#b99a79;font-size:17px;line-height:1;margin-top:1px;opacity:.8}
+@media(max-width:620px){.territory-shortcuts{gap:8px;padding:20px 14px 24px}.territory-shortcut{min-height:105px}.territory-shortcut strong{font-size:13px;letter-spacing:.08em}.territory-shortcut small{font-size:7px;letter-spacing:.12em}.territory-shortcut .shortcut-symbol,.territory-shortcut .shortcut-symbol svg{width:28px;height:28px}}
 </style></head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#accueil" aria-label="Les Chroniques Shinobi, accueil"><span class="brand-mark" aria-hidden="true">✥</span><span class="brand-name">Les Chroniques<small>Shinobi · Archives du monde ninja</small></span></a><nav class="navlinks" id="navlinks" aria-label="Navigation principale"><a class="active" href="#accueil">Accueil</a><a href="#konoha">Konoha</a><a href="#bastion">Bastion</a><a href="#suna">Suna</a><a href="#galerie">Galerie</a><a href="#apropos">À propos</a><a class="search-link" href="#galerie" aria-label="Aller à la galerie">⌕</a></nav></div></header>
 <main>
 <section class="hero" id="accueil" aria-label="Les Chroniques Shinobi"><div class="hero-mist" aria-hidden="true"></div><div class="hero-content"><span class="eyebrow">Des terres · Des histoires · Des shinobi</span><div class="hero-title"><span class="hero-title-small">Les Chroniques</span><h1>SHINOBI</h1><span class="hero-subtitle">Archives du monde ninja</span><span class="hero-sigil" aria-hidden="true">✥</span></div></div><a class="hero-scroll" href="#territoires" aria-label="Découvrir les territoires">⌄</a></section>
+<section class="territory-shortcuts" aria-label="Accès direct aux territoires">
+<a class="territory-shortcut" href="#histoire-konoha" aria-label="Découvrir Konoha, le Pays du Feu">
+<span class="shortcut-symbol" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M7 21c1-9 9-15 20-14 3 0 6 1 8 3-2 1-4 3-4 6 0 5-4 9-9 9-4 0-7-2-9-5"/><path d="M13 20c0 8-3 12-8 15 8 0 15-4 18-11"/><path d="M22 16c2-2 5-2 7 0-1 3-4 4-7 3"/></svg></span>
+<strong>Konoha</strong><small>Le Pays du Feu</small>
+</a>
+<a class="territory-shortcut" href="#histoire-bastion" aria-label="Découvrir le Bastion Nukenin">
+<span class="shortcut-symbol" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 3 25 13 34 9 31 20 37 25 27 27 20 37 13 27 3 25 9 20 6 9 15 13Z" fill="currentColor" stroke="none"/><path d="M20 11v17M14 18l6 5 6-5" stroke="#100909" stroke-width="2.4"/></svg></span>
+<strong>Bastion</strong><small>Les Nukenin</small>
+</a>
+<a class="territory-shortcut" href="#histoire-suna" aria-label="Découvrir Suna, le Pays du Vent">
+<span class="shortcut-symbol" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M9 5 31 35M31 5 9 35M9 5h22M9 35h22"/></svg></span>
+<strong>Suna</strong><small>Le Pays du Vent</small>
+</a>
+<div class="shortcut-divider" aria-hidden="true">◇</div>
+</section>
 <section class="section" id="territoires"><div class="wrap"><div class="section-head"><span class="eyebrow">Trois terres, trois destins</span><h2>Les territoires</h2><div class="ornament">✥</div><p>Chaque territoire possède ses traditions, ses blessures et ses propres légendes. Choisissez une terre pour en découvrir l'histoire.</p></div><div class="territories">
 <a class="territory" href="#histoire-konoha"><img src="assets/konoha.webp" alt="Paysage inspiré du Pays du Feu" loading="lazy"><div class="territory-copy"><span class="seal" aria-hidden="true">木</span><h3>Konoha</h3><span class="subtitle">Pays du Feu</span><p>Au cœur du Pays du Feu, un village façonné par ses liens, ses épreuves et la volonté de protéger les siens.</p><span class="text-link">Lire son histoire</span></div></a>
 <a class="territory" href="#histoire-bastion"><img src="assets/bastion.webp" alt="Forteresse sombre dans une nuit rouge" loading="lazy"><div class="territory-copy"><span class="seal" aria-hidden="true">✥</span><h3>Bastion Nukenin</h3><span class="subtitle">Terre des Nukenin</span><p>Un refuge à l'écart des règles établies, où les chemins brisés se croisent et où chacun porte son passé.</p><span class="text-link">Lire son histoire</span></div></a>
