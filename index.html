@@ -182,7 +182,7 @@ const publicationMessage = document.getElementById("publicationMessage");
 const publishButton = document.getElementById("publishButton");
 let communityAdmin = false;
 const communityEmojis = ["👍", "❤️", "😂", "🔥", "😮", "😢", "🎉"];
-const communityExtraEmojis = ["😍","🥰","😘","🤩","👏","🙌","💪","💯","✨","⭐","🌟","💖","💜","💙","💚","🧡","🤍","🖤","💀","👀","🤔","😎","😭","🤣","🥹","🙏","✅","❌","⚔️","🌀","🍥","🐸","🐍","🦊","🐺","🌸","🌙","☀️","🌪️","🔥","💥"];
+const communityExtraEmojis = [...communityEmojis];
 const communityLightbox = document.getElementById("communityLightbox");
 const communityLightboxMedia = document.getElementById("communityLightboxMedia");
 const communityLightboxBody = document.getElementById("communityLightboxBody");
@@ -303,40 +303,10 @@ async function loadCommunityGallery() {
       const reactions = document.createElement("div");
       reactions.className = "community-reactions";
       const counts = new Map((post.reactions || []).map(item => [item.emoji, Number(item.count)]));
-      for (const emoji of communityEmojis) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.textContent = emoji + " " + (counts.get(emoji) || 0);
-        button.setAttribute("aria-label", "Réagir avec " + emoji);
-        button.setAttribute("aria-pressed", "false");
-        button.addEventListener("click", async () => {
-          button.disabled = true;
-          try {
-            const result = await fetch(DISCORD_API + "/api/publications/" + encodeURIComponent(post.id) + "/reactions", {
-              method: "POST",
-              credentials: "include",
-              mode: "cors",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ emoji })
-            });
-            const answer = await result.json();
-            if (!result.ok) {
-              showDiscordStatus(answer.error || "Connecte-toi pour réagir.");
-              return;
-            }
-            await loadCommunityGallery();
-          } catch {
-            showDiscordStatus("Impossible d'enregistrer la réaction pour le moment.");
-          } finally {
-            button.disabled = false;
-          }
-        });
-        reactions.append(button);
-      }
       const emojiPicker = document.createElement("details");
       emojiPicker.className = "community-emoji-picker";
       const pickerSummary = document.createElement("summary");
-      pickerSummary.textContent = "＋ Autres réactions";
+      pickerSummary.textContent = "😊 Réagir";
       emojiPicker.append(pickerSummary);
       const pickerChoices = document.createElement("div");
       pickerChoices.className = "community-emoji-choices";
