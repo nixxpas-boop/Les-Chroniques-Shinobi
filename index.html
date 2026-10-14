@@ -53,6 +53,36 @@
 .discord-status{position:absolute;right:0;top:calc(100% + 8px);max-width:280px;padding:9px 12px;background:#171111;border:1px solid var(--line);color:#e9d8c7;font:12px Arial,sans-serif}
 @media(max-width:720px){.discord-account{top:12px;right:12px}.discord-login,.discord-user{min-height:37px;padding:0 10px;font-size:9px;gap:6px}.discord-profile .discord-name{display:none}.discord-menu{min-width:150px}}
 
+
+/* Galerie connectée et publication administrateur */
+.community-panel{margin:0 auto 30px;padding:22px;border:1px solid var(--line);background:rgba(18,13,13,.82);box-shadow:0 12px 32px #0003}
+.community-panel[hidden]{display:none}
+.community-panel h3{font-weight:normal;letter-spacing:.08em;margin:0 0 6px;font-size:22px}
+.community-panel p{color:var(--muted);font-size:13px;margin:0 0 16px}
+.community-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.community-form label{display:flex;flex-direction:column;gap:6px;color:#dfc8b4;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.community-form input,.community-form textarea,.community-form select{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);background:#0c0909;color:var(--ink);font:14px Georgia,serif;border-radius:0}
+.community-form textarea{min-height:84px;resize:vertical}
+.community-form .full{grid-column:1/-1}
+.community-form button,.community-reactions button,.community-delete{border:1px solid rgba(190,65,69,.7);background:rgba(80,20,23,.55);color:#f0dfd1;padding:9px 13px;cursor:pointer;font-size:11px;letter-spacing:.08em}
+.community-form button:hover,.community-reactions button:hover,.community-delete:hover{background:var(--red)}
+.community-message{font-size:12px;color:#e7c4a7;min-height:18px;margin-top:10px}
+.community-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin:20px 0 30px}
+.community-card{min-width:0;overflow:hidden;border:1px solid var(--line);background:#151010}
+.community-media{display:block;width:100%;aspect-ratio:1.55;object-fit:cover;background:#080707}
+video.community-media{height:auto}
+.community-card-body{padding:13px}
+.community-card h3{font-size:17px;font-weight:normal;margin:0 0 4px}
+.community-card p{font-size:13px;color:var(--muted);margin:7px 0 10px;white-space:pre-wrap;overflow-wrap:anywhere}
+.community-card .origin{display:inline-flex;margin-bottom:7px}
+.community-reactions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.community-reactions button{padding:6px 9px;letter-spacing:0;font-size:13px}
+.community-reactions button[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
+.community-card-actions{display:flex;justify-content:flex-end;margin-top:10px}
+.community-empty{grid-column:1/-1;color:var(--muted);text-align:center;padding:25px;border:1px dashed var(--line)}
+@media(max-width:800px){.community-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.community-panel{padding:15px}.community-form,.community-grid{grid-template-columns:1fr}.community-form .full{grid-column:auto}}
+
 </style></head>
 <body>
 
@@ -77,7 +107,39 @@
 <a class="territory-shortcut" href="#galerie" aria-label="Découvrir Suna, le Pays du Vent"><span class="shortcut-symbol" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M9 5 31 35M31 5 9 35M9 5h22M9 35h22"/></svg></span><strong>Suna</strong><small>Le Pays du Vent</small></a>
 </section>
 <a class="hero-scroll" href="#galerie" aria-label="Découvrir les territoires">⌄</a></section>
-<section class="section gallery-section" id="galerie"><div class="wrap"><div class="section-head"><span class="eyebrow">Images · Captures · Vidéos</span><h2>La galerie des Chroniques</h2><div class="ornament">✥</div><p>Un regard sur les territoires et leurs moments marquants. Chaque média indique clairement son territoire d'origine.</p></div><div class="filters" role="group" aria-label="Filtrer la galerie par territoire"><button class="filter" data-filter="tout" aria-pressed="true">Tout</button><button class="filter" data-filter="konoha" aria-pressed="false">Konoha</button><button class="filter" data-filter="bastion" aria-pressed="false">Bastion Nukenin</button><button class="filter" data-filter="suna" aria-pressed="false">Suna</button></div><div class="gallery" id="galleryGrid">
+<section class="section gallery-section" id="galerie"><div class="wrap"><div class="section-head"><span class="eyebrow">Images · Captures · Vidéos</span><h2>La galerie des Chroniques</h2><div class="ornament">✥</div><p>Un regard sur les territoires et leurs moments marquants. Chaque média indique clairement son territoire d'origine.</p></div><div class="filters" role="group" aria-label="Filtrer la galerie par territoire"><button class="filter" data-filter="tout" aria-pressed="true">Tout</button><button class="filter" data-filter="konoha" aria-pressed="false">Konoha</button><button class="filter" data-filter="bastion" aria-pressed="false">Bastion Nukenin</button><button class="filter" data-filter="suna" aria-pressed="false">Suna</button></div>
+<div class="community-panel" id="adminGalleryPanel" hidden>
+  <h3>Les archives privées</h3>
+  <p>Publie une capture ou une vidéo dans la galerie des Chroniques. Les fichiers sont limités à 25 Mo.</p>
+  <form class="community-form" id="publicationForm">
+    <label>Titre
+      <input name="title" maxlength="120" required placeholder="Ex. Une nuit au Bastion">
+    </label>
+    <label>Territoire
+      <select name="territory">
+        <option value="Konoha">Konoha</option>
+        <option value="Bastion Nukenin" selected>Bastion Nukenin</option>
+        <option value="Suna">Suna</option>
+      </select>
+    </label>
+    <label class="full">Description
+      <textarea name="description" maxlength="3000" placeholder="Le contexte de ce souvenir..."></textarea>
+    </label>
+    <label class="full">Image ou vidéo
+      <input name="file" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm" required>
+    </label>
+    <div class="full"><button type="submit" id="publishButton">Publier dans les archives</button><div class="community-message" id="publicationMessage" role="status"></div></div>
+  </form>
+</div>
+<div class="community-live">
+  <div class="section-head" style="margin-top:34px;margin-bottom:20px">
+    <span class="eyebrow">Archives partagées</span><h2>Les publications du monde shinobi</h2>
+    <p>Les images et vidéos ajoutées aux Chroniques, avec les réactions de la communauté.</p>
+  </div>
+  <div class="community-grid" id="communityGrid"><div class="community-empty">Chargement des archives…</div></div>
+</div>
+
+<div class="gallery" id="galleryGrid">
 <article class="media-card" data-territory="konoha"><span class="media-type">Image · Illustration</span><img src="assets/gallery-konoha.webp" alt="Paysage monochrome inspiré de Konoha" loading="lazy"><div class="meta"><h3>Au cœur des forêts</h3><span class="origin"><b>木</b> Konoha</span></div></article>
 <article class="media-card" data-territory="bastion"><span class="media-type">Image · Illustration</span><img src="assets/gallery-bastion.webp" alt="Forteresse nocturne aux lumières rouges" loading="lazy"><div class="meta"><h3>Les murs du Bastion</h3><span class="origin"><b>✥</b> Bastion</span></div></article>
 <article class="media-card" data-territory="suna"><span class="media-type">Image · Illustration</span><img src="assets/gallery-suna.webp" alt="Paysage rocheux et désertique" loading="lazy"><div class="meta"><h3>Les chemins de sable</h3><span class="origin"><b>砂</b> Suna</span></div></article>
@@ -94,6 +156,188 @@
 const sections=[...document.querySelectorAll('main section[id],.territory[id]')],links=[...document.querySelectorAll('.navlinks a')];
 function markActive(){const y=window.scrollY+130;let current='accueil';for(const section of sections){if(section.offsetTop<=y)current=section.id;}links.forEach(a=>{const target=a.getAttribute('href')?.slice(1);a.classList.toggle('active',target===current||(current==='territoires'&&target==='konoha'));});}
 window.addEventListener('scroll',markActive,{passive:true});markActive();
+
+
+const communityGrid = document.getElementById("communityGrid");
+const adminGalleryPanel = document.getElementById("adminGalleryPanel");
+const publicationForm = document.getElementById("publicationForm");
+const publicationMessage = document.getElementById("publicationMessage");
+const publishButton = document.getElementById("publishButton");
+let communityAdmin = false;
+const communityEmojis = ["👍", "❤️", "😂", "🔥", "😮", "😢", "🎉"];
+
+function escapeCommunityText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
+}
+
+function setCommunityAdmin(isAdmin) {
+  communityAdmin = Boolean(isAdmin);
+  adminGalleryPanel.hidden = !communityAdmin;
+}
+
+function territorySymbol(territory) {
+  if (territory === "Konoha") return "木";
+  if (territory === "Suna") return "砂";
+  return "✥";
+}
+
+async function loadCommunityGallery() {
+  try {
+    const response = await fetch(DISCORD_API + "/api/publications", { cache: "no-store" });
+    if (!response.ok) throw new Error("gallery");
+    const data = await response.json();
+    const publications = Array.isArray(data.publications) ? data.publications : [];
+    communityGrid.replaceChildren();
+
+    if (!publications.length) {
+      const empty = document.createElement("div");
+      empty.className = "community-empty";
+      empty.textContent = "Aucune publication pour le moment. Les prochaines archives apparaîtront ici.";
+      communityGrid.append(empty);
+      return;
+    }
+
+    for (const post of publications) {
+      const card = document.createElement("article");
+      card.className = "community-card";
+      const media = post.media_type === "video"
+        ? document.createElement("video")
+        : document.createElement("img");
+      media.className = "community-media";
+      media.src = post.media_url;
+      media.controls = post.media_type === "video";
+      media.loading = "lazy";
+      if (media.tagName === "IMG") media.alt = post.title || "Publication des Chroniques Shinobi";
+      else media.preload = "metadata";
+      card.append(media);
+
+      const body = document.createElement("div");
+      body.className = "community-card-body";
+      const origin = document.createElement("span");
+      origin.className = "origin";
+      const symbol = document.createElement("b");
+      symbol.textContent = territorySymbol(post.territory);
+      origin.append(symbol, document.createTextNode(" " + (post.territory || "Bastion Nukenin")));
+      body.append(origin);
+
+      const title = document.createElement("h3");
+      title.textContent = post.title || "Sans titre";
+      body.append(title);
+
+      if (post.description) {
+        const description = document.createElement("p");
+        description.textContent = post.description;
+        body.append(description);
+      }
+
+      const reactions = document.createElement("div");
+      reactions.className = "community-reactions";
+      const counts = new Map((post.reactions || []).map(item => [item.emoji, Number(item.count)]));
+      for (const emoji of communityEmojis) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = emoji + " " + (counts.get(emoji) || 0);
+        button.setAttribute("aria-label", "Réagir avec " + emoji);
+        button.setAttribute("aria-pressed", "false");
+        button.addEventListener("click", async () => {
+          button.disabled = true;
+          try {
+            const result = await fetch(DISCORD_API + "/api/publications/" + encodeURIComponent(post.id) + "/reactions", {
+              method: "POST",
+              credentials: "include",
+              mode: "cors",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ emoji })
+            });
+            const answer = await result.json();
+            if (!result.ok) {
+              showDiscordStatus(answer.error || "Connecte-toi pour réagir.");
+              return;
+            }
+            await loadCommunityGallery();
+          } catch {
+            showDiscordStatus("Impossible d'enregistrer la réaction pour le moment.");
+          } finally {
+            button.disabled = false;
+          }
+        });
+        reactions.append(button);
+      }
+      body.append(reactions);
+
+      if (communityAdmin) {
+        const actions = document.createElement("div");
+        actions.className = "community-card-actions";
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "community-delete";
+        remove.textContent = "Supprimer";
+        remove.addEventListener("click", async () => {
+          if (!window.confirm("Supprimer cette publication et son média ? Cette action est définitive.")) return;
+          remove.disabled = true;
+          try {
+            const result = await fetch(DISCORD_API + "/api/publications/" + encodeURIComponent(post.id), {
+              method: "DELETE", credentials: "include", mode: "cors"
+            });
+            const answer = await result.json();
+            if (!result.ok) throw new Error(answer.error || "Suppression impossible.");
+            await loadCommunityGallery();
+          } catch (error) {
+            showDiscordStatus(error.message || "Suppression impossible.");
+            remove.disabled = false;
+          }
+        });
+        actions.append(remove);
+        body.append(actions);
+      }
+
+      card.append(body);
+      communityGrid.append(card);
+    }
+  } catch {
+    communityGrid.innerHTML = '<div class="community-empty">Les archives ne sont pas disponibles pour le moment.</div>';
+  }
+}
+
+publicationForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!communityAdmin) return;
+
+  const fileInput = publicationForm.elements.namedItem("file");
+  const file = fileInput.files && fileInput.files[0];
+  if (!file) {
+    publicationMessage.textContent = "Choisis un fichier avant de publier.";
+    return;
+  }
+  if (file.size > 25 * 1024 * 1024) {
+    publicationMessage.textContent = "Le fichier dépasse la limite de 25 Mo.";
+    return;
+  }
+
+  publishButton.disabled = true;
+  publicationMessage.textContent = "Envoi du média en cours…";
+
+  try {
+    const result = await fetch(DISCORD_API + "/api/publications", {
+      method: "POST",
+      credentials: "include",
+      mode: "cors",
+      body: new FormData(publicationForm)
+    });
+    const answer = await result.json();
+    if (!result.ok) throw new Error(answer.error || "Publication impossible.");
+    publicationForm.reset();
+    publicationMessage.textContent = "Publication ajoutée aux archives !";
+    await loadCommunityGallery();
+  } catch (error) {
+    publicationMessage.textContent = error.message || "Erreur lors de la publication.";
+  } finally {
+    publishButton.disabled = false;
+  }
+});
+
 
 const DISCORD_API = "https://chroniques-shinobi-api.nixxpas.workers.dev";
 const discordLogin = document.getElementById("discordLogin");
@@ -151,7 +395,8 @@ async function loadDiscordSession() {
     });
     if (!response.ok) throw new Error("session");
     const data = await response.json();
-    if (!data.user) return;
+    if (!data.user) { setCommunityAdmin(false); await loadCommunityGallery(); return; }
+    setCommunityAdmin(data.admin === true);
     discordName.textContent = data.user.username || "Compte Discord";
     if (data.user.avatar && data.user.id) {
       discordAvatar.src = "https://cdn.discordapp.com/avatars/" +
@@ -161,10 +406,12 @@ async function loadDiscordSession() {
     }
     discordLogin.hidden = true;
     discordUser.hidden = false;
+    await loadCommunityGallery();
   } catch {
     // Le bouton de connexion reste disponible si la session ne peut pas être lue.
   }
 }
 loadDiscordSession();
+loadCommunityGallery();
 
 </script></body></html>
