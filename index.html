@@ -75,7 +75,15 @@ video.community-media{height:auto}
 .community-card h3{font-size:17px;font-weight:normal;margin:0 0 4px}
 .community-card p{font-size:13px;color:var(--muted);margin:7px 0 10px;white-space:pre-wrap;overflow-wrap:anywhere}
 .community-card .origin{display:inline-flex;margin-bottom:7px}
-.community-reactions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.community-reactions{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:12px}
+.community-reaction-list{display:flex;flex-wrap:wrap;gap:5px;max-width:100%}
+.community-reaction-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 9px!important;background:#211616;border:1px solid var(--line);font-size:14px!important}
+.community-reaction-chip[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
+.community-reaction-count{font-size:12px;font-weight:700;color:#fff}
+.community-emoji-picker{position:relative;align-self:flex-start}
+.community-emoji-burst{position:fixed;z-index:2000;pointer-events:none;left:0;top:0;font-size:25px;line-height:1;animation:communityEmojiBurst 1.25s ease-out forwards;filter:drop-shadow(0 2px 5px #0009)}
+@keyframes communityEmojiBurst{0%{opacity:0;transform:translate(0,0) scale(.35) rotate(0deg)}12%{opacity:1}100%{opacity:0;transform:translate(var(--burst-x),var(--burst-y)) scale(1.45) rotate(var(--burst-rotate))}}
+
 .community-reactions button{padding:6px 9px;letter-spacing:0;font-size:13px}
 .community-reactions button[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
 .community-emoji-picker{position:relative;align-self:flex-start}
@@ -315,10 +323,71 @@ async function loadCommunityGallery() {
       const reactions = document.createElement("div");
       reactions.className = "community-reactions";
       const counts = new Map((post.reactions || []).map(item => [item.emoji, Number(item.count)]));
+      const reactionList = document.createElement("div");
+      reactionList.className = "community-reaction-list";
+      reactionList.setAttribute("aria-label", "Réactions de la communauté");
+
+      const animateReaction = (emoji, anchor) => {
+        const rect = anchor.getBoundingClientRect();
+        for (let i = 0; i < 14; i++) {
+          const particle = document.createElement("span");
+          particle.className = "community-emoji-burst";
+          particle.textContent = emoji;
+          particle.style.left = (rect.left + rect.width / 2) + "px";
+          particle.style.top = (rect.top + rect.height / 2) + "px";
+          const angle = (Math.PI * 2 * i / 14) + (Math.random() * .3);
+          const distance = 45 + Math.random() * 105;
+          particle.style.setProperty("--burst-x", Math.cos(angle) * distance + "px");
+          particle.style.setProperty("--burst-y", (Math.sin(angle) * distance - 45) + "px");
+          particle.style.setProperty("--burst-rotate", (Math.random() * 100 - 50) + "deg");
+          document.body.append(particle);
+          particle.addEventListener("animationend", () => particle.remove(), { once: true });
+        }
+      };
+
+      const sendReaction = async (emoji, anchor) => {
+        anchor.disabled = true;
+        try {
+          const result = await fetch(DISCORD_API + "/api/publications/" + encodeURIComponent(post.id) + "/reactions", {
+            method: "POST", credentials: "include", mode: "cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ emoji })
+          });
+          const answer = await result.json();
+          if (!result.ok) {
+            showDiscordStatus(answer.error || "Connecte-toi pour réagir.");
+            return;
+          }
+          animateReaction(emoji, anchor);
+          await loadCommunityGallery();
+        } catch {
+          showDiscordStatus("Impossible d'enregistrer la réaction pour le moment.");
+        } finally {
+          anchor.disabled = false;
+        }
+      };
+
+      // Show every emoji already used directly on the publication, without opening the picker.
+      for (const [emoji, count] of counts) {
+        if (count <= 0) continue;
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "community-reaction-chip";
+        chip.textContent = emoji;
+        const countLabel = document.createElement("span");
+        countLabel.className = "community-reaction-count";
+        countLabel.textContent = String(count);
+        chip.append(countLabel);
+        chip.setAttribute("aria-label", "Réagir avec " + emoji + " (" + count + ")");
+        chip.addEventListener("click", () => sendReaction(emoji, chip));
+        reactionList.append(chip);
+      }
+      reactions.append(reactionList);
+
       const emojiPicker = document.createElement("details");
       emojiPicker.className = "community-emoji-picker";
       const pickerSummary = document.createElement("summary");
-      pickerSummary.textContent = "😊 Réagir";
+      pickerSummary.textContent = "😊 Ajouter une réaction";
       emojiPicker.append(pickerSummary);
       const pickerChoices = document.createElement("div");
       pickerChoices.className = "community-emoji-choices";
@@ -328,24 +397,8 @@ async function loadCommunityGallery() {
         choice.textContent = emoji + (counts.has(emoji) ? " " + counts.get(emoji) : "");
         choice.setAttribute("aria-label", "Réagir avec " + emoji);
         choice.addEventListener("click", async () => {
-          choice.disabled = true;
-          try {
-            const result = await fetch(DISCORD_API + "/api/publications/" + encodeURIComponent(post.id) + "/reactions", {
-              method: "POST", credentials: "include", mode: "cors",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ emoji })
-            });
-            const answer = await result.json();
-            if (!result.ok) {
-              showDiscordStatus(answer.error || "Connecte-toi pour réagir.");
-              return;
-            }
-            await loadCommunityGallery();
-          } catch {
-            showDiscordStatus("Impossible d'enregistrer la réaction pour le moment.");
-          } finally {
-            choice.disabled = false;
-          }
+          await sendReaction(emoji, choice);
+          if (!choice.disabled) emojiPicker.open = false;
         });
         pickerChoices.append(choice);
       }
