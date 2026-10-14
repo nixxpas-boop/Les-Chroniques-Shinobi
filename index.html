@@ -27,6 +27,17 @@
 @media(max-width:800px){.nav{min-height:70px}.brand{min-width:0}.brand-name{font-size:13px}.menu-toggle{display:none}.navlinks{display:none;position:absolute;top:69px;left:0;right:0;background:#100c0c;border-bottom:1px solid var(--line);padding:8px 22px 17px;flex-direction:column;align-items:stretch;gap:0}.navlinks.open{display:flex}.navlinks a{padding:12px 0}.navlinks a:after{bottom:5px}.hero{min-height:600px;background-position:center center}.hero-content{padding:250px 0 48px}.territories{grid-template-columns:1fr;gap:14px}.territory{min-height:310px}.story{grid-template-columns:1fr}.story img{height:210px;min-height:0}.story-copy{padding:22px}.gallery{grid-template-columns:repeat(2,1fr)}.about-inner{grid-template-columns:1fr;gap:18px}.quote{font-size:20px}.section{padding:58px 0}}
 @media(max-width:520px){.wrap{width:min(var(--max),calc(100% - 28px))}.brand-mark{width:39px;height:39px}.brand-name{font-size:11px;letter-spacing:.1em}.brand-name small{font-size:8px}.hero{min-height:560px}.hero-content{padding:210px 0 42px}.hero h1{font-size:45px}.hero p{font-size:15px}.gallery{grid-template-columns:1fr}.media-card img{aspect-ratio:1.5}.footer-inner{align-items:flex-start;flex-direction:column}.section-head p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* FIX visible: le bandeau reste dans le panorama, juste sous le titre */
+.hero{min-height:clamp(760px,68vw,940px);height:auto}
+.hero-content{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:1280px;padding:44px 18px 92px;gap:0}
+.hero-title{flex:0 0 auto}
+.hero .territory-shortcuts{display:grid;position:relative;z-index:5;width:min(1240px,calc(100% - 44px));grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,28px);margin:30px auto 0;padding:0;background:transparent;border:0;overflow:visible}
+.hero .territory-shortcut{display:flex;min-height:124px;visibility:visible;opacity:1}
+.hero .hero-scroll{bottom:10px}
+@media(max-width:800px){.hero{min-height:760px}.hero-content{padding:190px 12px 75px}.hero .territory-shortcuts{width:calc(100% - 24px);gap:8px;margin-top:24px}.hero .territory-shortcut{min-height:100px}}
+@media(max-width:520px){.hero{min-height:740px}.hero-content{padding:165px 8px 72px}.hero .territory-shortcuts{width:calc(100% - 12px);gap:6px;margin-top:20px}.hero .territory-shortcut{min-height:86px}.hero .territory-shortcut strong{font-size:12px}.hero .territory-shortcut small{font-size:7px}}
+
 </style></head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#accueil" aria-label="Les Chroniques Shinobi, accueil"><span class="brand-mark" aria-hidden="true">✥</span><span class="brand-name">Les Chroniques<small>Shinobi · Archives du monde ninja</small></span></a><nav class="navlinks" id="navlinks" aria-label="Navigation principale"><a class="active" href="#accueil">Accueil</a><a href="#konoha">Konoha</a><a href="#bastion">Bastion</a><a href="#suna">Suna</a><a href="#galerie">Galerie</a><a href="#apropos">À propos</a><a class="search-link" href="#galerie" aria-label="Aller à la galerie">⌕</a></nav></div></header>
