@@ -38,8 +38,36 @@
 @media(max-width:800px){.hero{min-height:760px}.hero-content{padding:190px 12px 75px}.hero .territory-shortcuts{width:calc(100% - 24px);gap:8px;margin-top:24px}.hero .territory-shortcut{min-height:100px}}
 @media(max-width:520px){.hero{min-height:740px}.hero-content{padding:165px 8px 72px}.hero .territory-shortcuts{width:calc(100% - 12px);gap:6px;margin-top:20px}.hero .territory-shortcut{min-height:86px}.hero .territory-shortcut strong{font-size:12px}.hero .territory-shortcut small{font-size:7px}}
 
+
+/* Connexion Discord — accès discret en haut à droite */
+.discord-account{position:fixed;top:16px;right:clamp(14px,3vw,36px);z-index:50;font-family:Arial,sans-serif}
+.discord-login,.discord-user{display:flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:0 15px;border:1px solid rgba(190,65,69,.75);border-radius:3px;background:rgba(12,9,10,.88);backdrop-filter:blur(10px);color:#f0e2d5;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 5px 18px #0005;transition:background .2s,border-color .2s}
+.discord-login:hover,.discord-user:hover{background:rgba(94,22,27,.94);border-color:#d65a5e}
+.discord-mark{width:17px;height:17px;display:block;fill:currentColor;flex-shrink:0}
+.discord-account[hidden],.discord-login[hidden],.discord-user[hidden]{display:none}
+.discord-profile{display:flex;align-items:center;gap:8px}
+.discord-avatar{width:25px;height:25px;border-radius:50%;object-fit:cover;border:1px solid rgba(210,170,140,.65)}
+.discord-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:170px;padding:7px;background:rgba(15,11,12,.97);border:1px solid var(--line);box-shadow:0 12px 30px #0008}
+.discord-menu button{display:block;width:100%;padding:10px 12px;border:0;background:transparent;color:#ead8c7;text-align:left;font-size:11px;cursor:pointer}
+.discord-menu button:hover{background:rgba(168,41,44,.25)}
+.discord-status{position:absolute;right:0;top:calc(100% + 8px);max-width:280px;padding:9px 12px;background:#171111;border:1px solid var(--line);color:#e9d8c7;font:12px Arial,sans-serif}
+@media(max-width:720px){.discord-account{top:12px;right:12px}.discord-login,.discord-user{min-height:37px;padding:0 10px;font-size:9px;gap:6px}.discord-profile .discord-name{display:none}.discord-menu{min-width:150px}}
+
 </style></head>
 <body>
+
+<div class="discord-account" id="discordAccount">
+  <button class="discord-login" id="discordLogin" type="button">
+    <svg class="discord-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.7 5.2a18.8 18.8 0 0 0-4.6-1.4l-.6 1.2a17 17 0 0 0-5 0l-.6-1.2a18.7 18.7 0 0 0-4.6 1.4C1.4 9.4.6 13.5 1 17.5a18.7 18.7 0 0 0 5.7 2.9l1.2-1.9-1.9-.9.5-.4c3.7 1.7 7.7 1.7 11.4 0l.5.4-1.9.9 1.2 1.9a18.6 18.6 0 0 0 5.7-2.9c.5-4.7-.8-8.8-3.7-12.3ZM8.7 14.9c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm6.6 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/></svg>
+    Connexion Discord
+  </button>
+  <button class="discord-user" id="discordUser" type="button" hidden aria-expanded="false">
+    <span class="discord-profile"><img class="discord-avatar" id="discordAvatar" alt="" hidden><span class="discord-name" id="discordName">Compte connecté</span><span aria-hidden="true">⌄</span></span>
+  </button>
+  <div class="discord-menu" id="discordMenu" hidden><button id="discordLogout" type="button">Se déconnecter</button></div>
+  <div class="discord-status" id="discordStatus" role="status" hidden></div>
+</div>
+
 
 <main>
 <section class="hero" id="accueil" aria-label="Les Chroniques Shinobi"><div class="hero-mist" aria-hidden="true"></div><div class="hero-content"><img class="hero-logo" src="assets/logo-chroniques.png" alt="Les Chroniques Shinobi" fetchpriority="high">
@@ -66,4 +94,77 @@
 const sections=[...document.querySelectorAll('main section[id],.territory[id]')],links=[...document.querySelectorAll('.navlinks a')];
 function markActive(){const y=window.scrollY+130;let current='accueil';for(const section of sections){if(section.offsetTop<=y)current=section.id;}links.forEach(a=>{const target=a.getAttribute('href')?.slice(1);a.classList.toggle('active',target===current||(current==='territoires'&&target==='konoha'));});}
 window.addEventListener('scroll',markActive,{passive:true});markActive();
+
+const DISCORD_API = "https://chroniques-shinobi-api.nixxpas.workers.dev";
+const discordLogin = document.getElementById("discordLogin");
+const discordUser = document.getElementById("discordUser");
+const discordName = document.getElementById("discordName");
+const discordAvatar = document.getElementById("discordAvatar");
+const discordMenu = document.getElementById("discordMenu");
+const discordStatus = document.getElementById("discordStatus");
+function showDiscordStatus(message) {
+  discordStatus.textContent = message;
+  discordStatus.hidden = false;
+  window.setTimeout(() => { discordStatus.hidden = true; }, 5000);
+}
+discordLogin.addEventListener("click", () => {
+  window.location.href = DISCORD_API + "/auth/discord";
+});
+discordUser.addEventListener("click", () => {
+  discordMenu.hidden = !discordMenu.hidden;
+  discordUser.setAttribute("aria-expanded", String(!discordMenu.hidden));
+});
+document.addEventListener("click", event => {
+  if (!event.target.closest("#discordAccount")) {
+    discordMenu.hidden = true;
+    discordUser.setAttribute("aria-expanded", "false");
+  }
+});
+document.getElementById("discordLogout").addEventListener("click", async () => {
+  try {
+    const response = await fetch(DISCORD_API + "/auth/logout", {
+      method: "POST", credentials: "include", mode: "cors"
+    });
+    if (!response.ok) throw new Error("logout");
+    discordUser.hidden = true;
+    discordLogin.hidden = false;
+    discordMenu.hidden = true;
+    discordAvatar.hidden = true;
+    showDiscordStatus("Déconnexion effectuée.");
+  } catch {
+    showDiscordStatus("Déconnexion impossible pour le moment. Réessaie.");
+  }
+});
+async function loadDiscordSession() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("discord") === "connected") showDiscordStatus("Connexion Discord réussie !");
+  if (params.get("discord") === "error") showDiscordStatus("La connexion Discord n'a pas abouti. Réessaie.");
+  if (params.has("discord")) {
+    params.delete("discord");
+    const cleanUrl = window.location.pathname + (params.toString() ? "?" + params.toString() : "") + window.location.hash;
+    history.replaceState({}, "", cleanUrl);
+  }
+  try {
+    const response = await fetch(DISCORD_API + "/auth/me", {
+      method: "GET", credentials: "include", mode: "cors",
+      headers: { "Accept": "application/json" }
+    });
+    if (!response.ok) throw new Error("session");
+    const data = await response.json();
+    if (!data.user) return;
+    discordName.textContent = data.user.username || "Compte Discord";
+    if (data.user.avatar && data.user.id) {
+      discordAvatar.src = "https://cdn.discordapp.com/avatars/" +
+        encodeURIComponent(data.user.id) + "/" +
+        encodeURIComponent(data.user.avatar) + ".png?size=64";
+      discordAvatar.hidden = false;
+    }
+    discordLogin.hidden = true;
+    discordUser.hidden = false;
+  } catch {
+    // Le bouton de connexion reste disponible si la session ne peut pas être lue.
+  }
+}
+loadDiscordSession();
+
 </script></body></html>
