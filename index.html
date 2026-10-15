@@ -126,6 +126,11 @@ video.community-media{height:auto}
 @media(max-width:520px){.community-panel{padding:15px}.community-form,.community-grid{grid-template-columns:1fr}.community-form .full{grid-column:auto}}
 
 
+/* Les visuels des territoires contiennent déjà leur emblème et leur intitulé */
+.territory-shortcut .shortcut-symbol,
+.territory-shortcut strong,
+.territory-shortcut small{display:none!important}
+.territory-shortcut{background-image:var(--territory-image)!important}
 /* Ajustement de la hauteur des accès aux territoires */
 .territory-shortcuts{margin-top:46px!important}
 
