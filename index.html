@@ -217,6 +217,12 @@ video.community-media{height:auto}
 @media(max-width:900px){.chronicles-nav{width:100%;max-width:100%;min-height:76px;padding:0 9%;gap:0}.chronicles-nav-link{padding:9px 3px;font-size:9px}}
 @media(max-width:560px){.chronicles-nav{min-height:64px;padding:0 8%;gap:0}.chronicles-nav-link{font-size:7px;letter-spacing:0;padding:8px 1px}.chronicles-nav-link .nav-mark{display:inline;font-size:9px}}
 
+/* Ajustement du cadre HUD : éviter l'étirement pleine largeur et rogner les marges vides du PNG */
+.chronicles-nav{width:min(1450px,calc(100% - 180px))!important;max-width:1450px!important;height:116px;min-height:116px!important;padding:0 clamp(90px,9vw,150px)!important;top:0!important;background-size:100% 300%!important;background-position:center center!important;gap:0!important}
+.chronicles-nav-link{padding:10px 5px!important;font-size:10px}
+@media(max-width:900px){.chronicles-nav{width:calc(100% - 30px)!important;max-width:900px!important;height:100px;min-height:100px!important;padding:0 8%!important;background-size:100% 300%!important}}
+@media(max-width:560px){.chronicles-nav{width:100%!important;height:78px;min-height:78px!important;padding:0 7%!important;background-size:100% 300%!important}.chronicles-nav-link{font-size:7px;padding:7px 1px!important}}
+
 </style></head>
 <body>
 
