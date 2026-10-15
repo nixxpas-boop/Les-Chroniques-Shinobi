@@ -103,7 +103,16 @@ video.community-media{height:auto}
 .community-card.is-featured{border-color:rgba(220,155,115,.8);box-shadow:0 0 22px rgba(150,45,40,.16)}
 .community-lightbox{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(5,4,4,.92);backdrop-filter:blur(8px)}
 .community-lightbox.open{display:flex}
-.community-lightbox-dialog{position:relative;width:min(1100px,100%);max-height:92vh;overflow:auto;border:1px solid var(--line);background:#120e0e;box-shadow:0 20px 70px #000}
+.community-lightbox-dialog{position:relative;width:min(1100px,100%);max-height:92vh;overflow:auto;border:1px solid rgba(225,202,171,.6);background:#120e0e;box-shadow:0 20px 70px #000;transition:border-color .25s,box-shadow .25s}
+.community-lightbox-dialog.territory-konoha{border-color:#547b53;box-shadow:0 0 0 1px #547b5333,0 20px 70px #000,0 0 36px #315b302b}
+.community-lightbox-dialog.territory-suna{border-color:#c49a62;box-shadow:0 0 0 1px #c49a6233,0 20px 70px #000,0 0 36px #b77c332b}
+.community-lightbox-dialog.territory-bastion{border-color:#9e3038;box-shadow:0 0 0 1px #9e303833,0 20px 70px #000,0 0 36px #9e202b30}
+#communityLightboxMedia{position:relative;display:grid;place-items:center;min-height:180px;padding:18px;background:radial-gradient(ellipse at center,#211718 0%,#100c0d 62%,#080707 100%)}
+.territory-konoha #communityLightboxMedia{background:radial-gradient(ellipse at center,#1b2a1b 0%,#111511 58%,#080908 100%)}
+.territory-suna #communityLightboxMedia{background:radial-gradient(ellipse at center,#342719 0%,#17120d 58%,#090807 100%)}
+.territory-bastion #communityLightboxMedia{background:radial-gradient(ellipse at center,#2a1014 0%,#160c0e 58%,#080607 100%)}
+.community-lightbox-media{display:block;max-width:100%;max-height:72vh;width:auto;height:auto;margin:0 auto;object-fit:contain;background:transparent}
+.community-lightbox-media:not(video){border:1px solid rgba(225,202,171,.12);box-shadow:0 10px 32px #0008}
 .community-lightbox-close{position:sticky;top:8px;float:right;z-index:3;margin:8px 8px -48px 0;width:38px;height:38px;border:1px solid var(--line);background:#100b0b;color:#fff;font-size:24px;cursor:pointer}
 .community-lightbox-media{display:block;max-width:100%;max-height:72vh;width:auto;height:auto;margin:0 auto;object-fit:contain;background:#050404}
 .community-lightbox video{width:100%}
@@ -220,6 +229,11 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape") closeCommunityLightbox();
 });
 function openCommunityLightbox(post) {
+  const dialog = communityLightbox.querySelector(".community-lightbox-dialog");
+  dialog.classList.remove("territory-konoha", "territory-suna", "territory-bastion");
+  const territoryClass = post.territory === "Konoha" ? "territory-konoha"
+    : post.territory === "Suna" ? "territory-suna" : "territory-bastion";
+  dialog.classList.add(territoryClass);
   communityLightboxMedia.replaceChildren();
   const media = document.createElement(post.media_type === "video" ? "video" : "img");
   media.className = "community-lightbox-media";
