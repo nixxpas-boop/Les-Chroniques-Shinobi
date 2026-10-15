@@ -194,7 +194,7 @@ video.community-media{height:auto}
 @media(max-width:760px){.chronicles-nav-separator{margin:0 1px;height:20px}}
 
 /* Barre basée sur le visuel fourni dans assets, avec de vrais liens au-dessus */
-.chronicles-nav{top:14px;left:50%;transform:translateX(-50%);width:min(900px,calc(100% - 320px));max-width:none;min-height:78px;box-sizing:border-box;padding:14px 42px;gap:5px;justify-content:center;background:transparent url('assets/Barre%20de%20navigation%20samoura%C3%AF%20orn%C3%A9e.png') center/100% 100% no-repeat;border:0;box-shadow:none;backdrop-filter:none;clip-path:none;isolation:isolate}
+.chronicles-nav{top:14px;left:50%;transform:translateX(-50%);width:min(900px,calc(100% - 320px));max-width:none;min-height:78px;box-sizing:border-box;padding:14px 42px;gap:5px;justify-content:center;background:transparent url('assets/Cadre%20HUD%20asiatique%20en%20or%20et%20rubis.png') center/100% 100% no-repeat;border:0;box-shadow:none;backdrop-filter:none;clip-path:none;isolation:isolate}
 .chronicles-nav:before{content:none}
 .chronicles-nav-link{z-index:1;flex:0 1 auto;padding:11px 13px;background:transparent;border:1px solid transparent;overflow:visible}
 .chronicles-nav-link:before{content:"";position:absolute;z-index:-1;inset:-7px -5px;border-radius:50%;opacity:0;transform:scale(.75);filter:blur(9px);transition:opacity .3s ease,transform .3s ease;background:radial-gradient(ellipse,rgba(190,43,49,.55),rgba(190,43,49,.18) 42%,transparent 72%)}
@@ -208,6 +208,14 @@ video.community-media{height:auto}
 .chronicles-nav-link.nav-bastion:hover,.chronicles-nav-link.nav-bastion:focus-visible{border-color:#b72f39}
 @media(max-width:900px){.chronicles-nav{width:calc(100% - 24px);top:8px;padding:12px 24px;min-height:68px;gap:0;max-width:none}.chronicles-nav-link{padding:9px 8px;font-size:9px;letter-spacing:.5px}}
 @media(max-width:560px){.chronicles-nav{background-size:100% 100%;padding:9px 16px;min-height:60px}.chronicles-nav-link{padding:8px 5px;font-size:8px;gap:3px}.chronicles-nav-link .nav-mark{font-size:10px}}
+
+
+/* Ajustements pour le cadre HUD à cinq emplacements */
+.chronicles-nav{width:min(100%,2048px);max-width:calc(100% - 24px);min-height:clamp(76px,10vw,150px);padding:0 clamp(70px,10vw,190px);gap:clamp(0px,1vw,18px);background-image:url('assets/Cadre%20HUD%20asiatique%20en%20or%20et%20rubis.png');background-size:100% 100%;background-position:center;background-repeat:no-repeat}
+.chronicles-nav-link{flex:1 1 0;min-width:0;justify-content:center;padding:11px 6px;text-align:center}
+.chronicles-nav-separator{display:none}
+@media(max-width:900px){.chronicles-nav{width:100%;max-width:100%;min-height:76px;padding:0 9%;gap:0}.chronicles-nav-link{padding:9px 3px;font-size:9px}}
+@media(max-width:560px){.chronicles-nav{min-height:64px;padding:0 8%;gap:0}.chronicles-nav-link{font-size:7px;letter-spacing:0;padding:8px 1px}.chronicles-nav-link .nav-mark{display:inline;font-size:9px}}
 
 </style></head>
 <body>
