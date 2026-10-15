@@ -124,6 +124,33 @@ video.community-media{height:auto}
 @media(max-width:800px){.community-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.community-panel{padding:15px}.community-form,.community-grid{grid-template-columns:1fr}.community-form .full{grid-column:auto}}
 
+
+/* Ajustement de la hauteur des accès aux territoires */
+.territory-shortcuts{margin-top:46px!important}
+
+/* Cadres d'archives cohérents avant et après l'ouverture d'une publication */
+.community-card{position:relative;border:1px solid rgba(225,202,171,.52);box-shadow:0 8px 24px #0005;transition:border-color .25s,box-shadow .25s,transform .25s}
+.community-card:hover{transform:translateY(-3px)}
+.community-card:before{content:"";position:absolute;inset:5px;z-index:2;pointer-events:none;border:1px solid rgba(225,202,171,.12);background:linear-gradient(currentColor,currentColor) left top/22px 1px no-repeat,linear-gradient(currentColor,currentColor) left top/1px 22px no-repeat,linear-gradient(currentColor,currentColor) right top/22px 1px no-repeat,linear-gradient(currentColor,currentColor) right top/1px 22px no-repeat,linear-gradient(currentColor,currentColor) left bottom/22px 1px no-repeat,linear-gradient(currentColor,currentColor) left bottom/1px 22px no-repeat,linear-gradient(currentColor,currentColor) right bottom/22px 1px no-repeat,linear-gradient(currentColor,currentColor) right bottom/1px 22px no-repeat;opacity:.85}
+.community-card.territory-konoha{color:#9ac18c;border-color:#547b53;box-shadow:0 0 0 1px #547b5326,0 8px 24px #0007}
+.community-card.territory-suna{color:#e0bd83;border-color:#b88b50;box-shadow:0 0 0 1px #c49a6226,0 8px 24px #0007}
+.community-card.territory-bastion{color:#e05a62;border-color:#9e3038;box-shadow:0 0 0 1px #9e303826,0 8px 24px #0007}
+.community-card.territory-konoha:before{border-color:#547b5338}
+.community-card.territory-suna:before{border-color:#c49a6238}
+.community-card.territory-bastion:before{border-color:#9e303838}
+.community-card.territory-konoha .community-card-body,.community-card.territory-suna .community-card-body,.community-card.territory-bastion .community-card-body{color:#eadfce}
+.community-card.territory-konoha .origin{color:#9ac18c}
+.community-card.territory-suna .origin{color:#e0bd83}
+.community-card.territory-bastion .origin{color:#e05a62}
+.community-lightbox-dialog{border-width:2px;box-shadow:0 0 0 1px #000,0 22px 75px #000d;position:relative}
+.community-lightbox-dialog:after{content:"";position:absolute;inset:7px;z-index:4;pointer-events:none;border:1px solid rgba(225,202,171,.13);background:linear-gradient(currentColor,currentColor) left top/34px 2px no-repeat,linear-gradient(currentColor,currentColor) left top/2px 34px no-repeat,linear-gradient(currentColor,currentColor) right top/34px 2px no-repeat,linear-gradient(currentColor,currentColor) right top/2px 34px no-repeat,linear-gradient(currentColor,currentColor) left bottom/34px 2px no-repeat,linear-gradient(currentColor,currentColor) left bottom/2px 34px no-repeat,linear-gradient(currentColor,currentColor) right bottom/34px 2px no-repeat,linear-gradient(currentColor,currentColor) right bottom/2px 34px no-repeat;opacity:.8}
+.community-lightbox-dialog.territory-konoha{color:#9ac18c}
+.community-lightbox-dialog.territory-suna{color:#e0bd83}
+.community-lightbox-dialog.territory-bastion{color:#e05a62}
+.community-lightbox-dialog.territory-konoha:after{border-color:#547b5340}
+.community-lightbox-dialog.territory-suna:after{border-color:#c49a6240}
+.community-lightbox-dialog.territory-bastion:after{border-color:#9e303840}
+
 </style></head>
 <body>
 
@@ -295,7 +322,7 @@ async function loadCommunityGallery() {
 
     for (const post of publications) {
       const card = document.createElement("article");
-      card.className = "community-card";
+      card.className = "community-card " + (post.territory === "Konoha" ? "territory-konoha" : post.territory === "Suna" ? "territory-suna" : "territory-bastion");
       if (publications[0] === post && score(post) > 0) {
         card.classList.add("is-featured");
         const featured = document.createElement("span");
