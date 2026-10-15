@@ -189,6 +189,13 @@ video.community-media{height:auto}
 @media(max-width:760px){.chronicles-nav{top:8px;max-width:calc(100% - 20px);width:calc(100% - 20px);gap:clamp(7px,2vw,14px);padding:8px 5px;overflow-x:auto;justify-content:center}.chronicles-nav-link{font-size:9px;letter-spacing:.6px;padding:8px 2px}}
 @media(max-width:430px){.chronicles-nav{justify-content:flex-start}.chronicles-nav-link{font-size:8px;letter-spacing:.3px}}
 
+/* Navigation épurée : uniquement les textes, plus espacés */
+.chronicles-nav{gap:clamp(26px,4.2vw,68px)!important;padding:10px 0!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+.chronicles-nav-link{padding:9px 2px!important;border:1px solid transparent!important;background:transparent!important;box-shadow:none!important}
+.chronicles-nav-link:after{inset:-3px -7px!important;border-color:transparent!important}
+.chronicles-nav-link:hover:after,.chronicles-nav-link:focus-visible:after,.chronicles-nav-link.is-active:after{border-color:currentColor!important}
+.chronicles-nav-link:hover,.chronicles-nav-link:focus-visible,.chronicles-nav-link.is-active{background:transparent!important;box-shadow:none!important}
+
 </style></head>
 <body>
 
