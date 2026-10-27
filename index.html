@@ -227,6 +227,20 @@ html.lenis, html.lenis body{height:auto}
 @media(max-width:700px){.latest-chronicles{padding:64px 0 70px}.latest-grid{gap:10px}.latest-placeholder{padding:12px;gap:8px}.latest-placeholder strong{font-size:12px;letter-spacing:.06em}.latest-placeholder small{font-size:8px;letter-spacing:.08em}.latest-mark{font-size:24px}.latest-number{font-size:9px;letter-spacing:.15em}}
 @media(max-width:440px){.latest-grid{grid-template-columns:1fr}.latest-placeholder{aspect-ratio:1.25/1}.latest-placeholder strong{font-size:15px}}
 
+
+/* Titre des dernières chroniques : dégradé assorti au logo d'accueil */
+.latest-chronicles .latest-title{
+  color:#e9c9aa;
+  background:linear-gradient(180deg,#fff0d8 0%,#c99370 52%,#f2d9b8 70%,#8c392d 100%);
+  background-clip:text;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 0 #2c0908) drop-shadow(0 0 14px rgba(0,0,0,.75));
+  font-weight:normal;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
 </style></head>
 <body>
 
@@ -265,10 +279,8 @@ html.lenis, html.lenis body{height:auto}
 <section class="latest-chronicles" id="dernieres-chroniques" aria-labelledby="latestChroniclesTitle">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Les mémoires du monde ninja</span>
-      <h2 id="latestChroniclesTitle">Dernières Chroniques</h2>
+      <h2 id="latestChroniclesTitle" class="latest-title">DERNIÈRES CHRONIQUES</h2>
       <div class="ornament" aria-hidden="true">✥</div>
-      <p>Les récits et les souvenirs qui façonnent l’histoire des shinobi.</p>
     </div>
     <div class="latest-grid" aria-label="Emplacements des prochaines chroniques">
       <article class="latest-placeholder"><span class="latest-number">CHRONIQUE · 01</span><span class="latest-mark" aria-hidden="true">✥</span><strong>À découvrir</strong><small>Prochainement dans les archives</small></article>
