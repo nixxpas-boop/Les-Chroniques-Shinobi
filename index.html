@@ -241,6 +241,19 @@ html.lenis, html.lenis body{height:auto}
   letter-spacing:.12em;
 }
 
+
+/* Cartes illustrées des dernières chroniques */
+.latest-grid{align-items:stretch}
+.latest-card{position:relative;min-width:0;overflow:hidden;border:1px solid rgba(185,154,121,.32);background:linear-gradient(180deg,#171111,#090808);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.latest-card:hover{transform:translateY(-5px);border-color:rgba(225,178,143,.78);box-shadow:0 14px 32px #0008,0 0 22px rgba(168,41,44,.1)}
+.latest-image{display:block;width:100%;aspect-ratio:1.35/1;object-fit:cover;filter:grayscale(.35) contrast(1.04) brightness(.86);transition:filter .35s ease,transform .5s ease}
+.latest-card:hover .latest-image{filter:grayscale(.08) contrast(1.06) brightness(1);transform:scale(1.035)}
+.latest-card-copy{position:relative;padding:19px 20px 22px;border-top:1px solid rgba(185,154,121,.18)}
+.latest-card-copy .latest-number{display:block;margin-bottom:8px;font-size:9px;letter-spacing:.2em}
+.latest-card-copy h3{margin:0 0 8px;color:#ead6c2;font-size:clamp(16px,1.7vw,21px);font-weight:normal;letter-spacing:.04em}
+.latest-card-copy p{margin:0;color:#a99a8d;font-size:13px;line-height:1.65}
+@media(max-width:700px){.latest-card-copy{padding:14px}.latest-card-copy h3{font-size:16px}.latest-card-copy p{font-size:12px}}
+
 </style></head>
 <body>
 
@@ -282,10 +295,19 @@ html.lenis, html.lenis body{height:auto}
       <h2 id="latestChroniclesTitle" class="latest-title">DERNIÈRES CHRONIQUES</h2>
       <div class="ornament" aria-hidden="true">✥</div>
     </div>
-    <div class="latest-grid" aria-label="Emplacements des prochaines chroniques">
-      <article class="latest-placeholder"><span class="latest-number">CHRONIQUE · 01</span><span class="latest-mark" aria-hidden="true">✥</span><strong>À découvrir</strong><small>Prochainement dans les archives</small></article>
-      <article class="latest-placeholder"><span class="latest-number">CHRONIQUE · 02</span><span class="latest-mark" aria-hidden="true">✥</span><strong>À découvrir</strong><small>Prochainement dans les archives</small></article>
-      <article class="latest-placeholder"><span class="latest-number">CHRONIQUE · 03</span><span class="latest-mark" aria-hidden="true">✥</span><strong>À découvrir</strong><small>Prochainement dans les archives</small></article>
+    <div class="latest-grid" aria-label="Dernières chroniques">
+      <article class="latest-card">
+        <img class="latest-image" src="assets/1.jpg" alt="Chronique du monde ninja, illustration 1" loading="lazy">
+        <div class="latest-card-copy"><span class="latest-number">CHRONIQUE · 01</span><h3>Les traces du passé</h3><p>Certains souvenirs traversent les années et continuent de façonner le destin des shinobi.</p></div>
+      </article>
+      <article class="latest-card">
+        <img class="latest-image" src="assets/2.jpg" alt="Chronique du monde ninja, illustration 2" loading="lazy">
+        <div class="latest-card-copy"><span class="latest-number">CHRONIQUE · 02</span><h3>Au cœur des territoires</h3><p>Chaque village garde ses secrets, ses traditions et les récits de ceux qui l'ont marqué.</p></div>
+      </article>
+      <article class="latest-card">
+        <img class="latest-image" src="assets/3.jpg" alt="Chronique du monde ninja, illustration 3" loading="lazy">
+        <div class="latest-card-copy"><span class="latest-number">CHRONIQUE · 03</span><h3>Les mémoires des shinobi</h3><p>Des instants capturés, des histoires partagées et des fragments d'une époque à préserver.</p></div>
+      </article>
     </div>
   </div>
 </section>
