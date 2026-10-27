@@ -475,6 +475,24 @@ html.lenis, html.lenis body{height:auto}
   .territory-shortcuts{grid-template-columns:1fr!important;width:calc(100% - 32px)!important;gap:10px!important;padding-top:18px!important}
   .territory-shortcut{min-height:100px!important}
 }
+
+/* Accueil compact avec comparateur de deux territoires */
+.hero{min-height:clamp(390px,43vw,570px)!important;max-height:570px!important;overflow:hidden!important}
+.hero:before{background:linear-gradient(0deg,rgba(8,5,5,.68),rgba(0,0,0,.10) 65%,rgba(0,0,0,.24)),url('assets/hero.webp') center/cover no-repeat!important;opacity:.25}
+.hero-compare{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#100c0b}
+.hero-compare-image{position:absolute;inset:0;overflow:hidden}
+.hero-compare-image img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:brightness(.74) contrast(1.08) saturate(.78);user-select:none;pointer-events:none}
+.hero-compare-right{clip-path:inset(0 0 0 50%)}
+.hero-compare-divider{position:absolute;top:0;bottom:0;left:50%;width:2px;background:rgba(241,220,193,.95);box-shadow:0 0 14px rgba(0,0,0,.7);transform:translateX(-50%);pointer-events:none}
+.hero-compare-divider span{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:42px;height:42px;transform:translate(-50%,-50%);border:1px solid rgba(241,220,193,.9);border-radius:50%;background:rgba(15,11,10,.86);color:#f1dcc1;font-size:22px;box-shadow:0 3px 14px #0008}
+.hero-compare-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;z-index:5}
+.hero-compare-label{position:absolute;top:24px;left:24px;padding:8px 12px;background:rgba(9,7,7,.52);border:1px solid rgba(241,220,193,.35);color:#f1dcc1;font-size:10px;letter-spacing:.16em;text-shadow:0 2px 6px #000}
+.hero-compare-right .hero-compare-label{left:auto;right:24px}
+.hero-content{z-index:2;pointer-events:none}
+.hero-content a,.hero-content button,.hero-content input{pointer-events:auto}
+.hero-logo{width:min(570px,72vw)!important}
+@media(max-width:700px){.hero{min-height:430px!important;max-height:480px!important}.hero-compare-label{top:12px;left:12px!important;right:auto!important;font-size:8px;padding:6px 8px;letter-spacing:.08em}.hero-compare-right .hero-compare-label{left:auto!important;right:12px!important}.hero-logo{width:min(440px,82vw)!important}}
+
 </style></head>
 <body>
 <div class="chronicle-progress" aria-hidden="true"><span></span></div>
@@ -503,7 +521,12 @@ html.lenis, html.lenis body{height:auto}
 
 
 <main>
-<section class="hero" id="accueil" aria-label="Les Chroniques Shinobi"><div class="hero-mist" aria-hidden="true"></div><div class="hero-content"><span class="hero-logo-wrap"><img class="hero-logo" src="assets/logo-chroniques.png" alt="Les Chroniques Shinobi" fetchpriority="high"><span class="hero-logo-shine" aria-hidden="true"></span></span>
+<section class="hero" id="accueil" aria-label="Les Chroniques Shinobi"><div class="hero-compare" id="heroCompare" aria-label="Comparateur visuel entre Konoha et Suna">
+  <div class="hero-compare-image hero-compare-left"><img src="assets/konoha.jpg" alt="" aria-hidden="true"><span class="hero-compare-label">KONOHA · PAYS DU FEU</span></div>
+  <div class="hero-compare-image hero-compare-right" id="heroCompareRight"><img src="assets/suna.jpg" alt="" aria-hidden="true"><span class="hero-compare-label">SUNA · PAYS DU VENT</span></div>
+  <div class="hero-compare-divider" id="heroCompareDivider" aria-hidden="true"><span>↔</span></div>
+  <input class="hero-compare-range" id="heroCompareRange" type="range" min="8" max="92" value="50" aria-label="Faire glisser pour comparer Konoha et Suna">
+</div><div class="hero-mist" aria-hidden="true"></div><div class="hero-content"><span class="hero-logo-wrap"><img class="hero-logo" src="assets/logo-chroniques.png" alt="Les Chroniques Shinobi" fetchpriority="high"><span class="hero-logo-shine" aria-hidden="true"></span></span>
 <section class="territory-shortcuts" aria-label="Accès direct aux territoires">
 <a class="territory-shortcut" href="#galerie" aria-label="Découvrir Konoha, le Pays du Feu"><span class="shortcut-symbol" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M7 21c1-9 9-15 20-14 3 0 6 1 8 3-2 1-4 3-4 6 0 5-4 9-9 9-4 0-7-2-9-5"/><path d="M13 20c0 8-3 12-8 15 8 0 15-4 18-11"/><path d="M22 16c2-2 5-2 7 0-1 3-4 4-7 3"/></svg></span><strong>Konoha</strong><small>Le Pays du Feu</small></a>
 <a class="territory-shortcut" href="#galerie" aria-label="Découvrir le Bastion Nukenin"><span class="shortcut-symbol" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 3 25 13 34 9 31 20 37 25 27 27 20 37 13 27 3 25 9 20 6 9 15 13Z" fill="currentColor" stroke="none"/><path d="M20 11v17M14 18l6 5 6-5" stroke="#100909" stroke-width="2.4"/></svg></span><strong>Bastion</strong><small>Les Nukenin</small></a>
@@ -1010,4 +1033,15 @@ loadCommunityGallery();
 })();
 </script>
 
+<script>
+(function(){
+ const range=document.getElementById('heroCompareRange');
+ const right=document.getElementById('heroCompareRight');
+ const divider=document.getElementById('heroCompareDivider');
+ if(!range||!right||!divider)return;
+ function update(){const v=Number(range.value);right.style.clipPath='inset(0 0 0 '+v+'%)';divider.style.left=v+'%';}
+ range.addEventListener('input',update,{passive:true});
+ update();
+})();
+</script>
 </body></html>
