@@ -357,6 +357,46 @@ html.lenis, html.lenis body{height:auto}
 }
 
 
+/* Fondus cinématiques entre les sections */
+.latest-chronicles{
+  background:linear-gradient(180deg,#080707 0%,#eee8df 138px,#eee8df calc(100% - 138px),#080707 100%);
+  border-bottom:0;
+  isolation:isolate;
+}
+.latest-chronicles:before{
+  inset:0;
+  background:
+    linear-gradient(180deg,rgba(8,7,7,.24) 0%,transparent 145px,transparent calc(100% - 145px),rgba(8,7,7,.18) 100%),
+    radial-gradient(ellipse at 50% 0%,rgba(185,154,121,.2),transparent 62%);
+  opacity:.9;
+  animation:chronicle-fade-breathe 9s ease-in-out infinite alternate;
+}
+.latest-chronicles:after{
+  top:auto;
+  bottom:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,rgba(112,72,54,.24),transparent);
+  opacity:.55;
+}
+@keyframes chronicle-fade-breathe{
+  from{opacity:.72}
+  to{opacity:1}
+}
+/* Le fondu est plus court sur mobile pour garder les cartes bien lisibles. */
+@media(max-width:700px){
+  .latest-chronicles{
+    background:linear-gradient(180deg,#080707 0%,#eee8df 88px,#eee8df calc(100% - 88px),#080707 100%);
+  }
+  .latest-chronicles:before{
+    background:
+      linear-gradient(180deg,rgba(8,7,7,.2) 0%,transparent 92px,transparent calc(100% - 92px),rgba(8,7,7,.14) 100%),
+      radial-gradient(ellipse at 50% 0%,rgba(185,154,121,.16),transparent 62%);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .latest-chronicles:before{animation:none;opacity:.9}
+}
+
 /* Expérience immersive : progression, révélations et profondeur au défilement */
 .chronicle-progress{
   position:fixed;top:0;left:0;width:100%;height:2px;z-index:1000;
