@@ -370,6 +370,31 @@ html.lenis, html.lenis body{height:auto}
 .latest-image{border:0!important;outline:0!important;box-shadow:none!important}
 .latest-card-copy{border-top:0!important}
 .latest-chronicles:after{display:none!important}
+/* Vague animée très douce dans les fondus entre sections */
+.latest-chronicles{position:relative;overflow:hidden}
+.latest-chronicles:before{
+  background:
+    radial-gradient(ellipse 75% 120px at 50% 0%,rgba(8,7,7,.92) 0%,rgba(8,7,7,.35) 42%,transparent 74%),
+    radial-gradient(ellipse 90% 145px at 15% 0%,rgba(8,7,7,.78) 0%,transparent 72%),
+    radial-gradient(ellipse 85% 135px at 82% 0%,rgba(8,7,7,.72) 0%,transparent 74%),
+    radial-gradient(ellipse 90% 145px at 50% 100%,rgba(8,7,7,.55) 0%,transparent 74%),
+    radial-gradient(ellipse at 50% 0%,rgba(185,154,121,.2),transparent 62%);
+  background-size:100% 190px,120% 210px,120% 200px,100% 180px,100% 100%;
+  background-position:center top,left -12% top,right -18% top,center bottom,center;
+  background-repeat:no-repeat;
+  animation:chronicle-wave 12s ease-in-out infinite alternate;
+  opacity:.9;
+}
+@keyframes chronicle-wave{
+  0%{background-position:center top,left -12% top,right -18% top,center bottom,center;transform:translateY(0)}
+  50%{background-position:center top,left 2% top,right -4% top,center bottom,center;transform:translateY(3px)}
+  100%{background-position:center top,left 12% top,right 8% top,center bottom,center;transform:translateY(-2px)}
+}
+@media(max-width:700px){
+  .latest-chronicles:before{background-size:100% 120px,120% 130px,120% 130px,100% 120px,100% 100%}
+}
+@media(prefers-reduced-motion:reduce){.latest-chronicles:before{animation:none!important}}
+
 /* Fondus cinématiques entre les sections */
 .latest-chronicles{
   background:linear-gradient(180deg,#080707 0%,#eee8df 138px,#eee8df calc(100% - 138px),#080707 100%);
