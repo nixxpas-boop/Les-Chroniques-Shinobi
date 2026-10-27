@@ -370,28 +370,35 @@ html.lenis, html.lenis body{height:auto}
 .latest-image{border:0!important;outline:0!important;box-shadow:none!important}
 .latest-card-copy{border-top:0!important}
 .latest-chronicles:after{display:none!important}
-/* Vague animée très douce dans les fondus entre sections */
-.latest-chronicles{position:relative;overflow:hidden}
+/* Vague animée plus visible dans le fondu entre l'accueil et les chroniques */
+.latest-chronicles{position:relative;isolation:isolate;overflow:hidden}
 .latest-chronicles:before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:-12%;
+  top:-62px;
+  width:124%;
+  height:150px;
+  pointer-events:none;
+  opacity:.95;
   background:
-    radial-gradient(ellipse 75% 120px at 50% 0%,rgba(8,7,7,.92) 0%,rgba(8,7,7,.35) 42%,transparent 74%),
-    radial-gradient(ellipse 90% 145px at 15% 0%,rgba(8,7,7,.78) 0%,transparent 72%),
-    radial-gradient(ellipse 85% 135px at 82% 0%,rgba(8,7,7,.72) 0%,transparent 74%),
-    radial-gradient(ellipse 90% 145px at 50% 100%,rgba(8,7,7,.55) 0%,transparent 74%),
-    radial-gradient(ellipse at 50% 0%,rgba(185,154,121,.2),transparent 62%);
-  background-size:100% 190px,120% 210px,120% 200px,100% 180px,100% 100%;
-  background-position:center top,left -12% top,right -18% top,center bottom,center;
+    radial-gradient(ellipse 28% 68px at 20% 100%,#080707 0 68%,transparent 72%),
+    radial-gradient(ellipse 34% 82px at 52% 100%,#080707 0 66%,transparent 71%),
+    radial-gradient(ellipse 30% 72px at 84% 100%,#080707 0 67%,transparent 72%),
+    linear-gradient(#080707 0 42%,transparent 43%);
   background-repeat:no-repeat;
-  animation:chronicle-wave 12s ease-in-out infinite alternate;
-  opacity:.9;
+  filter:drop-shadow(0 12px 10px rgba(8,7,7,.18));
+  animation:chronicle-wave-visible 8s ease-in-out infinite alternate;
 }
-@keyframes chronicle-wave{
-  0%{background-position:center top,left -12% top,right -18% top,center bottom,center;transform:translateY(0)}
-  50%{background-position:center top,left 2% top,right -4% top,center bottom,center;transform:translateY(3px)}
-  100%{background-position:center top,left 12% top,right 8% top,center bottom,center;transform:translateY(-2px)}
+@keyframes chronicle-wave-visible{
+  0%{transform:translate3d(-2%,0,0) scaleY(.92)}
+  50%{transform:translate3d(1%,10px,0) scaleY(1.06)}
+  100%{transform:translate3d(3%,-3px,0) scaleY(.96)}
 }
+.latest-chronicles .wrap{position:relative;z-index:1}
 @media(max-width:700px){
-  .latest-chronicles:before{background-size:100% 120px,120% 130px,120% 130px,100% 120px,100% 100%}
+  .latest-chronicles:before{top:-42px;height:105px}
 }
 @media(prefers-reduced-motion:reduce){.latest-chronicles:before{animation:none!important}}
 
