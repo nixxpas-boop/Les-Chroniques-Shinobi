@@ -254,6 +254,54 @@ html.lenis, html.lenis body{height:auto}
 .latest-card-copy p{margin:0;color:#a99a8d;font-size:13px;line-height:1.65}
 @media(max-width:700px){.latest-card-copy{padding:14px}.latest-card-copy h3{font-size:16px}.latest-card-copy p{font-size:12px}}
 
+
+/* Variante claire pour la section Dernières Chroniques */
+.latest-chronicles{
+  background:#eee8df;
+  border-bottom:1px solid rgba(74,48,39,.22);
+}
+.latest-chronicles:before{
+  background:radial-gradient(ellipse at 50% 0%,rgba(185,154,121,.2),transparent 62%);
+}
+.latest-chronicles .latest-title{
+  background:linear-gradient(180deg,#713b2c 0%,#a65c3e 48%,#5d2423 100%);
+  background-clip:text;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:none;
+}
+.latest-chronicles .ornament{color:#8f292c}
+.latest-chronicles .ornament:before,.latest-chronicles .ornament:after{
+  background:linear-gradient(90deg,transparent,rgba(112,72,54,.62));
+}
+.latest-chronicles .ornament:after{transform:scaleX(-1)}
+.latest-card{
+  background:#f8f4ee;
+  border-color:rgba(91,61,46,.26);
+  box-shadow:0 8px 22px rgba(44,28,20,.08);
+}
+.latest-card:hover{
+  border-color:rgba(143,41,44,.58);
+  box-shadow:0 14px 30px rgba(44,28,20,.16),0 0 18px rgba(143,41,44,.08);
+}
+.latest-image{filter:grayscale(.25) contrast(1.02) brightness(.94)}
+.latest-card:hover .latest-image{filter:grayscale(.04) contrast(1.04) brightness(1)}
+.latest-card-copy{border-top-color:rgba(91,61,46,.16)}
+.latest-card-copy .latest-number{color:#9a6047}
+.latest-card-copy h3{color:#38241e}
+.latest-card-copy p{color:#76665c}
+.latest-footer{display:flex;justify-content:flex-end;margin-top:26px}
+.latest-all-link{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:11px 0 8px 18px;
+  border-bottom:1px solid rgba(143,41,44,.55);
+  color:#712b29;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;transition:gap .25s,color .25s,border-color .25s;
+}
+.latest-all-link span{font-size:17px;line-height:1}
+.latest-all-link:hover{gap:18px;color:#a8292c;border-color:#a8292c}
+@media(max-width:700px){.latest-footer{margin-top:20px}.latest-all-link{font-size:10px;letter-spacing:.07em}}
+
 </style></head>
 <body>
 
@@ -308,6 +356,9 @@ html.lenis, html.lenis body{height:auto}
         <img class="latest-image" src="assets/3.png" alt="Chronique du monde ninja, illustration 3" loading="lazy">
         <div class="latest-card-copy"><span class="latest-number">CHRONIQUE · 03</span><h3>Les mémoires des shinobi</h3><p>Des instants capturés, des histoires partagées et des fragments d'une époque à préserver.</p></div>
       </article>
+    </div>
+    <div class="latest-footer">
+      <a class="latest-all-link" href="#galerie">Explorer toutes les chroniques <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
