@@ -372,6 +372,77 @@ html.lenis, html.lenis body{height:auto}
 .latest-chronicles:after{display:none!important}
 
 
+
+/* Parchemin usé : fenêtres sombres et filigrane discret derrière les chroniques */
+.latest-chronicles{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:#090807!important;
+}
+.latest-chronicles:before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:0;
+  pointer-events:none;
+  opacity:.98;
+  background-color:#eee8df;
+  background-image:
+    radial-gradient(ellipse at 4% 14%,rgba(70,43,32,.10),transparent 27%),
+    radial-gradient(ellipse at 95% 76%,rgba(70,43,32,.09),transparent 30%),
+    repeating-linear-gradient(128deg,transparent 0 118px,rgba(82,55,42,.07) 119px,transparent 121px),
+    repeating-linear-gradient(42deg,transparent 0 164px,rgba(82,55,42,.06) 165px,transparent 167px);
+  -webkit-mask-image:
+    radial-gradient(ellipse 28px 76px at 0% 18%,transparent 45%,#000 100%),
+    radial-gradient(ellipse 38px 105px at 100% 42%,transparent 43%,#000 100%),
+    linear-gradient(#000,#000);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(#000,#000);
+}
+.latest-chronicles:after{
+  content:"LES CHRONIQUES SHINOBI";
+  display:block!important;
+  position:absolute;
+  z-index:0;
+  inset:0;
+  height:auto;
+  width:auto;
+  pointer-events:none;
+  background:none!important;
+  border:0!important;
+  transform:none!important;
+  color:rgba(37,25,21,.10);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(30px,7vw,100px);
+  font-weight:700;
+  letter-spacing:.09em;
+  line-height:1.1;
+  text-align:center;
+  align-content:center;
+  overflow-wrap:anywhere;
+  text-shadow:0 1px rgba(255,255,255,.14);
+}
+.latest-chronicles .wrap{position:relative;z-index:1}
+@media(max-width:700px){
+  .latest-chronicles:after{font-size:clamp(28px,9vw,48px);padding:0 12px}
+}
+/* Fissures fines sur les bords, sans animation */
+.latest-chronicles .section-head:before{
+  content:"";
+  position:absolute;
+  top:-26px;
+  left:-30px;
+  width:clamp(70px,12vw,150px);
+  height:clamp(90px,14vw,170px);
+  pointer-events:none;
+  opacity:.22;
+  background:
+    linear-gradient(138deg,transparent 48%,#624637 49%,transparent 50%) 0 0/100% 100%,
+    linear-gradient(28deg,transparent 48%,#624637 49%,transparent 50%) 0 0/75% 70% no-repeat,
+    linear-gradient(88deg,transparent 48%,#624637 49%,transparent 50%) 0 0/58% 92% no-repeat;
+}
+
 </style></head>
 <body>
 <div class="chronicle-progress" aria-hidden="true"><span></span></div>
