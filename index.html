@@ -357,6 +357,14 @@ html.lenis, html.lenis body{height:auto}
 }
 
 
+/* La séparation venait du bord inférieur de l'accueil */
+.hero{border-bottom:0!important}
+.hero:after{
+  bottom:-1px!important;
+  height:38%!important;
+  background:linear-gradient(180deg,transparent 0%,rgba(8,6,6,.16) 42%,rgba(8,7,7,.62) 78%,#080707 100%)!important;
+}
+.latest-chronicles{margin-top:-1px}
 /* Nettoyage des traits fins dans les dernières chroniques */
 .latest-card{border:0!important}
 .latest-image{border:0!important;outline:0!important;box-shadow:none!important}
